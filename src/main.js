@@ -6,6 +6,9 @@ import TypeNav from '@/pages/Home/TypeNav'
 Vue.component(TypeNav.name,TypeNav)
 //引入路由
 import router from '@/router';
+
+//引入仓库
+import store from '@/store'
 Vue.config.productionTip = false
 
 //注册路由：底下的写法kv一致省略v[router小写的]
@@ -13,5 +16,7 @@ Vue.config.productionTip = false
 new Vue({
   render: h => h(App),
   //注册路由
-  router
+  router,
+  //注册仓库：组件实例身上多一个属性$store属性
+  store
 }).$mount('#app')
