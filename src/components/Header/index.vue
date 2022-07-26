@@ -71,7 +71,11 @@ export default {
       //第二种：模板字符串
       // this.$router.push(`/search/${this.keyWords}?k=${this.keyWords.toUpperCase()}`)
       //第三种：对象
-      this.$router.push({name:'search',params:{keyWords:this.keyWords},query:{k:this.keyWords.toUpperCase()}})
+      if(this.$route.query){
+        let loction = {name:'search',params:{keyWords:this.keyWords||undefined}}
+        loction.query = this.$route.query;
+        this.$router.push(loction);
+      }
     }
   }
 };
