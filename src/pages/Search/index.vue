@@ -1,14 +1,14 @@
 <template>
   <div>
-    我是搜索
-    <h1>params参数----{{$route.params.keyWords}}</h1>
-    <h1>query参数-----{{$route.query.k}}</h1>
+  <!-- 这是search模块 -->
+  <typeNav></typeNav>
   </div>
 </template>
 
 <script>
 export default {
-    name:'search'
+    name: "search",
+    components: {}
 }
 </script>
 
