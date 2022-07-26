@@ -10,9 +10,6 @@
     <Floor></Floor>
     <Floor></Floor>
     <Brand></Brand>
-    <button @click="add">点击我+1</button>
-    <span>仓库的数据{{count}}</span>
-    <button >点击我-1</button>
   </div>
 </template>
 
@@ -40,7 +37,7 @@ export default {
     methods:{
       add(){
         //派发action
-        this.$store.dispatch('add');
+
       }
     }
 }
