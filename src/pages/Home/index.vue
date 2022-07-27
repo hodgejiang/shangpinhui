@@ -7,8 +7,7 @@
     <Recommend></Recommend>
     <Rank/>
     <Like></Like>
-    <Floor></Floor>
-    <Floor></Floor>
+    <Floor v-for="(floor,index) in floorList" :key="floor.id" :list="floor"></Floor>
     <Brand></Brand>
   </div>
 </template>
@@ -32,14 +31,11 @@ export default {
       Brand
     },
     computed:{
-      ...mapState(['count'])
+      ...mapState('home',{floorList:'floorList'})
     },
-    methods:{
-      add(){
-        //派发action
-
-      }
-    }
+    mounted(){
+      this.$store.dispatch('home/getFloorList')
+    },
 }
 </script>
 

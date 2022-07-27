@@ -6,7 +6,10 @@ import TypeNav from '@/components/TypeNav'
 Vue.component(TypeNav.name,TypeNav)
 //引入路由
 import router from '@/router';
-
+//引入MockServer.js
+import '@/mock/mockServe'
+//引入样式
+import "swiper/css/swiper.css"
 //引入仓库
 import store from '@/store'
 Vue.config.productionTip = false
