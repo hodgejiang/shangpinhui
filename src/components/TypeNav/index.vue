@@ -86,8 +86,7 @@ export default {
   },
   //组件挂载完毕
   mounted() {
-    //通知Vuex发请求，获取数据，存储于仓库中
-    this.$store.dispatch("home/categoryList");
+
     if (this.$route.path != "/home") {
       this.show = false;
     }
@@ -119,13 +118,13 @@ export default {
           query.category3Id = category3Id;
         }
         if(this.$route.params){
-          location.params = this.$route.params;
-           location.query = query;
+          location.query = query;
+          location.params = this.$route.params
         }
-
-
+ 
         this.$router.push(location);
       }
+      
     },
     leaveIndex() {
       this.currentIndex = -1;

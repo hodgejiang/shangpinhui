@@ -5,23 +5,7 @@
       <div class="sortList clearfix">
         <div class="center">
           <!--banner轮播-->
-          <div class="swiper-container" id="mySwiper">
-            <div class="swiper-wrapper">
-              <div
-                class="swiper-slide"
-                v-for="carousel in bannerList"
-                :key="carousel.id"
-              >
-                <img :src="carousel.imgUrl" />
-              </div>
-            </div>
-            <!-- 如果需要分页器 -->
-            <div class="swiper-pagination"></div>
-
-            <!-- 如果需要导航按钮 -->
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-          </div>
+          <Carsousel :list="bannerList"></Carsousel>
         </div>
         <div class="right">
           <div class="news">
@@ -99,45 +83,17 @@
 
 <script>
 import { mapState } from "vuex";
-import Swiper from "swiper";
+
 export default {
-  name: "",
-  prop:['list'],
-  created() {
-    this.$store.dispatch("home/getBannerList");
-  },
-  watch: {
-    bannerList: {
-      //现在咱们通过watch监听bannerList属性的属性值的变化
-      //如果执行handler方法，代表组件实例身上这个属性的属性已经有了
-
-      handler(newValue, oldValue) {
-        this.$nextTick(() => {
-          var mySwiper = new Swiper(
-            document.querySelector(".swiper-container"),
-            {
-              loop: true,
-              pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-              },
-              navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-              },
-            },
-            1000
-          );
-        });
-      },
+    name: "",
+    created() {
+        this.$store.dispatch("home/getBannerList");
     },
-  },
+    mounted() { },
+    computed: {
+        ...mapState("home", { bannerList: "bannerList" }),
+    },
 
-  mounted() {},
-
-  computed: {
-    ...mapState("home", { bannerList: "bannerList" }),
-  },
 };
 </script>
 
