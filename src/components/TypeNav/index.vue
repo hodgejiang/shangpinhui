@@ -18,7 +18,7 @@
                   <a
                     :data-categoryName="c1.categoryName"
                     :data-category1Id="c1.categoryId"
-                    >{{ c1.categoryName }}</a
+                    >{{ c1.categoryName  }}</a
                   >
                 </h3>
                 <!-- 二级，三级分类 -->
@@ -105,24 +105,27 @@ export default {
       //第一个问题:把子节点当中a标签，我加上自定义属性data-categoryName，其余的子节点是没有的
       //节点有一个属性dataset属性，可以获取节点的自定义属性与属性值
 
-      let { categoryname, category1Id, category2Id, category3Id } =
+      let { categoryname, category1id, category2id, category3id } =
         event.target.dataset;
+        console.log(categoryname, category1id, category2id, category3id)
+        console.log(event.target)
       if (categoryname) {
         let location = { name: "search" };
         let query = { categoryName: categoryname };
-        if (category1Id) {
-          query.category1Id = category1Id;
-        } else if (category2Id) {
-          query.category2Id = category2Id;
+        if (category1id) {
+          query.category1Id = category1id;
+        } else if (category2id) {
+          query.category2Id = category2id;
         } else {
-          query.category3Id = category3Id;
+          query.category3Id = category3id;
+          console.log(category3id)
         }
         if(this.$route.params){
           location.query = query;
           location.params = this.$route.params
         }
- 
-        this.$router.push(location);
+          this.$router.push(location);
+
       }
       
     },

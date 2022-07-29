@@ -4,7 +4,7 @@
       <div class="fl key brand">品牌</div>
       <div class="value logos">
         <ul class="logo-list">
-          <li v-for="(trademark,index) in trademarkList" :key="trademark.tmId" >{{ trademark.tmName}}</li>
+          <li v-for="(trademark,index) in trademarkList" :key="trademark.tmId" @click="tradeMatkHandler(trademark)" >{{ trademark.tmName}}</li>
         </ul>
       </div>
       <div class="ext">
@@ -12,131 +12,19 @@
         <a href="javascript:void(0);">更多</a>
       </div>
     </div>
-    <div class="type-wrap">
-      <div class="fl key">网络制式</div>
+    <!-- 平台售卖属性的地方 -->
+    <div class="type-wrap" v-for="(attr,index) in attrsList" :key="attr.attrid">
+    <!-- 平台售卖属性：比如说颜色 -->
+      <div class="fl key">{{ attr.attrName }}</div>
       <div class="fl value">
         <ul class="type-list">
-          <li>
-            <a>GSM（移动/联通2G）</a>
-          </li>
-          <li>
-            <a>电信2G</a>
-          </li>
-          <li>
-            <a>电信3G</a>
-          </li>
-          <li>
-            <a>移动3G</a>
-          </li>
-          <li>
-            <a>联通3G</a>
-          </li>
-          <li>
-            <a>联通4G</a>
-          </li>
-          <li>
-            <a>电信3G</a>
-          </li>
-          <li>
-            <a>移动3G</a>
-          </li>
-          <li>
-            <a>联通3G</a>
-          </li>
-          <li>
-            <a>联通4G</a>
+          <!-- 平台相应售卖的属性的属性值 -->
+          <li v-for="(attrValue,index) in attr.attrValueList" :key="attrValue" @click="attrInfo(attr,attrValue)">
+            <a>{{ attrValue }}</a>
           </li>
         </ul>
       </div>
       <div class="fl ext"></div>
-    </div>
-    <div class="type-wrap">
-      <div class="fl key">显示屏尺寸</div>
-      <div class="fl value">
-        <ul class="type-list">
-          <li>
-            <a>4.0-4.9英寸</a>
-          </li>
-          <li>
-            <a>4.0-4.9英寸</a>
-          </li>
-        </ul>
-      </div>
-      <div class="fl ext"></div>
-    </div>
-    <div class="type-wrap">
-      <div class="fl key">摄像头像素</div>
-      <div class="fl value">
-        <ul class="type-list">
-          <li>
-            <a>1200万以上</a>
-          </li>
-          <li>
-            <a>800-1199万</a>
-          </li>
-          <li>
-            <a>1200-1599万</a>
-          </li>
-          <li>
-            <a>1600万以上</a>
-          </li>
-          <li>
-            <a>无摄像头</a>
-          </li>
-        </ul>
-      </div>
-      <div class="fl ext"></div>
-    </div>
-    <div class="type-wrap">
-      <div class="fl key">价格</div>
-      <div class="fl value">
-        <ul class="type-list">
-          <li>
-            <a>0-500元</a>
-          </li>
-          <li>
-            <a>500-1000元</a>
-          </li>
-          <li>
-            <a>1000-1500元</a>
-          </li>
-          <li>
-            <a>1500-2000元</a>
-          </li>
-          <li>
-            <a>2000-3000元 </a>
-          </li>
-          <li>
-            <a>3000元以上</a>
-          </li>
-        </ul>
-      </div>
-      <div class="fl ext">
-      </div>
-    </div>
-    <div class="type-wrap">
-      <div class="fl key">更多筛选项</div>
-      <div class="fl value">
-        <ul class="type-list">
-          <li>
-            <a>特点</a>
-          </li>
-          <li>
-            <a>系统</a>
-          </li>
-          <li>
-            <a>手机内存 </a>
-          </li>
-          <li>
-            <a>单卡双卡</a>
-          </li>
-          <li>
-            <a>其他</a>
-          </li>
-        </ul>
-      </div>
-      <div class="fl ext">
-      </div>
     </div>
   </div>
 </template>
@@ -147,6 +35,16 @@ import { mapGetters } from 'vuex'
     name: 'SearchSelector',
     computed:{
       ...mapGetters('search',['trademarkList','attrsList'])
+    },
+    methods:{
+      //品牌的事件处理函数
+      tradeMatkHandler(trademark){
+        this.$emit('trademarkInfo',trademark)
+      },
+      attrInfo(attr, attrValue){
+        this.$emit("attrInfo",attr,attrValue)
+
+      }
     }
   }
 </script>

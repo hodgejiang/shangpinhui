@@ -61,6 +61,11 @@ export default {
       keyWords:''
     }
   },
+  mounted(){
+    this.$bus.$on("clear",()=>{
+      this.keyWords = ''
+    })
+  },
   methods:{
     //搜索按钮的回调函数：需要向search路由进行跳转
     goSearch(){
@@ -74,6 +79,7 @@ export default {
       if(this.$route.query){
         let loction = {name:'search',params:{keyWords:this.keyWords||undefined}}
         loction.query = this.$route.query;
+        console.log(loction)
         this.$router.push(loction);
       }
     }

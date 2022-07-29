@@ -20,6 +20,9 @@ Vue.config.productionTip = false
 //注册路由信息：当这里书写router的时候，组件身上都拥有$route,$router属性
 new Vue({
   render: h => h(App),
+  beforeCreate(){
+    Vue.prototype.$bus = this
+  },
   //注册路由
   router,
   //注册仓库：组件实例身上多一个属性$store属性
