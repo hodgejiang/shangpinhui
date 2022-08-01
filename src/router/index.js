@@ -9,7 +9,7 @@ import Home from '@/pages/Home'
 import Search from '@/pages/Search'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
-
+import Detail from '@/pages/Detail'
 
 let originPush = VueRouter.prototype.push;
 let originReplace = VueRouter.prototype.replace;
@@ -33,6 +33,11 @@ VueRouter.prototype.replace = function(location,resolve,reject){
 export default new VueRouter({
     //配置路由
     routes:[
+        {
+            path:"/detail",
+            component:Detail,
+            meta:{ show:true }
+        },
         {
             path:"/home",
             component:Home,

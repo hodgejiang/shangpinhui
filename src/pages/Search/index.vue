@@ -21,8 +21,8 @@
               {{ searchParams.keyWords }}<i @click="removeKeyWords">×</i>
             </li>
             <!-- 品牌的面包屑 -->
-            <li class="with-x" v-if="searchParams.trademark" @click="removeTradeMark">{{ searchParams.trademark.split(":")[1] }}</li>
-          <li class="with-x" v-for="(attrValue, index) in searchParams.props" :key="index" >{{attrValue.split(":")[1]}}</li>
+            <li class="with-x" v-if="searchParams.trademark" >{{ searchParams.trademark.split(":")[1] }}<i @click="removeTradeMark">×</i></li>
+          <li class="with-x" v-for="(attrValue, index) in searchParams.props" :key="index" >{{attrValue.split(":")[1]}}<i @click="removeAttr(index)">×</i></li>
           </ul>
         </div>
 
@@ -34,23 +34,11 @@
           <div class="sui-navbar">
             <div class="navbar-inner filter">
               <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">综合</a>
+                <li :class="{active:isOne}"  @click="changeOrder('1')">
+                  <a >综合 <span v-show="isOne">向下</span></a>
                 </li>
-                <li>
-                  <a href="#">销量</a>
-                </li>
-                <li>
-                  <a href="#">新品</a>
-                </li>
-                <li>
-                  <a href="#">评价</a>
-                </li>
-                <li>
-                  <a href="#">价格⬆</a>
-                </li>
-                <li>
-                  <a href="#">价格⬇</a>
+                <li :class="{active:isTwo}" @click="changeOrder('2')">
+                  <a >价格 <span v-show="isTwo">向下</span></a>
                 </li>
               </ul>
             </div>
@@ -100,6 +88,8 @@
               </li>
             </ul>
           </div>
+          <Pagination :pageNo="searchParams.pageNo" :pageSize="searchParams.pageSize" :total="total" :continues="5" @getPageNo="getPageNo"></Pagination>
+<!--           
           <div class="fr page">
             <div class="sui-pagination clearfix">
               <ul>
@@ -128,7 +118,7 @@
               </ul>
               <div><span>共10页&nbsp;</span></div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -143,7 +133,7 @@ export default {
 
   components: {
     SearchSelector,
-  },
+},
   data() {
     return {
       //带给服务器的参数
@@ -153,7 +143,7 @@ export default {
         category3Id: "",
         categoryName: "",
         keyWords: "",
-        order: "",
+        order: "1:desc",//初始的状态
         //排序
         pageNo: 1,
         pageSize: 10,
@@ -171,6 +161,13 @@ export default {
   },
   computed: {
     ...mapGetters("search", { goodsList: "goodsList" }),
+    isOne(){
+      return this.searchParams.order.indexOf('1')!=-1
+    },
+    isTwo(){
+      return this.searchParams.order.indexOf('2')!=-1
+    },
+    ...mapState('search',{total:state=>state.searchList.total})
   },
   //监听组件身上的属性值变化
   watch: {
@@ -222,6 +219,28 @@ export default {
       if(this.searchParams.props.indexOf(props)==-1) this.searchParams.props.push(props)
 
       this.getData();
+    },
+    //删除售卖属性
+    removeAttr(index){
+      this.searchParams.props.splice(index, 1)
+      this.getData()
+    },
+    changeOrder(flag){
+      let originOrder = this.searchParams.order;
+      let originFlag = this.searchParams.order.split(':')[0];
+      let orginSort = this.searchParams.order.split(':')[1];
+      let newOrder = '';
+      if(flag == originFlag){
+        newOrder = `${originFlag}:${orginSort == 'desc'?'asc':'desc'}`
+      }else{
+        newOrder = `${flag}:${'desc'}`
+      }
+      this.searchParams.order = newOrder;
+      this.getData()
+    },
+    getPageNo(pageNo){
+      this.searchParams.pageNo = pageNo;
+      this.getData()
     }
   },
 };
